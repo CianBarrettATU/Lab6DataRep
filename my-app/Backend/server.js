@@ -2,6 +2,12 @@ const express = require('express');
 const app = express();
 const port = 4000;
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+//cors middleware allows frontend to make calls to backend
+//without encountering CORS related issues
 const cors = require('cors');
 app.use(cors());
 
@@ -42,6 +48,10 @@ app.get('/api/movies', (req, res)=>{
 ]
     res.status(200).json({movies})
 });
+
+app.post('/api/movies', (req, res)=>{
+    res.send("movies added")
+})
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

@@ -1,6 +1,7 @@
 // create.js
 
 import { useState } from "react";
+import axios, { Axios } from "axios";
 
 //use state allows functions to manage state of variables.
 //used instead of classes.
@@ -13,12 +14,20 @@ function Create() {
 
 
   const handleSubmit = (e) => {
-    //stops func from being called multiple times
-    e.preventDefault();
-    console.log(title);
-    console.log(year);
-    console.log(poster);
-  }
+  e.preventDefault();
+  
+  console.log(`Title: ${title}, Year: ${year}, Poster: ${poster}`);
+  
+  const movie = {
+    title: title,
+    year: year,
+    poster: poster
+  };
+  
+  axios.post('http://localhost:4000/api/movies', movie)
+    .then((res) => console.log(res.data))
+    .catch((err) => console.log(err.data));
+};
 
   //when the button is clicked it logs movie details to console.
 
