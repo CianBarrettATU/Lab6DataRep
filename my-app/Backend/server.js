@@ -2,9 +2,7 @@ const express = require('express');
 const app = express();
 const port = 4000;
 
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+
 
 //cors middleware allows frontend to make calls to backend
 //without encountering CORS related issues
@@ -18,10 +16,15 @@ app.use(function(req, res, next) {
   next();
 });
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.send('server');
 });
 
+//using express to return json when get req is made
 app.get('/api/movies', (req, res)=>{
     const movies = [
     {
@@ -46,10 +49,14 @@ app.get('/api/movies', (req, res)=>{
       "Poster": "https://m.media-amazon.com/images/M/MV5BNDQ4YzFmNzktMmM5ZC00MDZjLTk1OTktNDE2ODE4YjM2MjJjXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
     }
 ]
+//status 200 is "ok"
     res.status(200).json({movies})
 });
 
+//sends response / logs data.
 app.post('/api/movies', (req, res)=>{
+    //parses json 
+    console.log(req.body.title);
     res.send("movies added")
 })
 
